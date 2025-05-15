@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deployment Assignment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        .answer-box {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .refresh-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .refresh-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Deployment Assignment - Frontend</h1>
+    
+    <div class="container">
+        <h2>Most Recent Data</h2>
+        <p>This is the most recent data received by the backend:</p>
+        <div class="answer-box">
+            <span id="answer">Loading...</span>
+        </div>
+        <button class="refresh-btn" onclick="fetchData()">Refresh Data</button>
+    </div>
+
+    <script>
+        // Function to fetch data from backend
+        async function fetchData() {
+            try {
+                // Replace this URL with your actual backend URL when deployed
+                const apiUrl = 'http://localhost:3001/api/get-answer';
+                
+                const response = await fetch(apiUrl);
+                
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                
+                const data = await response.json();
+                
+                // Update the span with the received data
+                document.getElementById('answer').textContent = data.data;
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                document.getElementById('answer').textContent = 'Error loading data. Please try again.';
+            }
+        }
+
+        // Fetch data when page loads
+        document.addEventListener('DOMContentLoaded', fetchData);
+    </script>
+</body>
+</html>
